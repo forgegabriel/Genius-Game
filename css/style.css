@@ -8,21 +8,33 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
-[class|="hud"] {
-    width: 100vw;
+.board {
+    position: relative;
 }
 
-#iniciar-jogo-btn {
+#central-btn {
+    z-index: 1;
+    position: absolute;
+    border-radius: 50%;
+    border: 15px solid #222;
+    background: darkslateblue;
+    width: min(35vw, 35vh, 200px);
+    height: min(35vw, 35vh, 200px);
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    cursor: pointer;
     font-weight: bold;
-    letter-spacing: 2px;
-    font-size: 20px;
+    -webkit-tap-highlight-color: transparent;
+    font-size: min( 7vw, 7vh, 40px);
 }
 
 .genius {
     display: grid;
-    grid-template-areas: "green red""yellow blue";
+    grid-template-areas: "green red" "yellow blue";
     border: 25px solid #222;
     background-color: #222;
     border-radius: 49%;
@@ -54,7 +66,6 @@ body {
 
 .genius>.blue-btn {
     background-image: linear-gradient(to bottom right, #1f66ff, #4a83ff) ;
-    background-color: #1f66ff;
     border-bottom-right-radius: 100%;
 }
 
@@ -71,42 +82,4 @@ body {
 
 .opacity-change {
     opacity: 100%;
-}
-
-.button-52 {
-  font-size: 16px;
-  font-weight: 200;
-  letter-spacing: 1px;
-  padding: 13px 20px 13px;
-  outline: 0;
-  border: 1px solid black;
-  cursor: pointer;
-  position: relative;
-  background-color: rgba(0, 0, 0, 0);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-}
-
-.button-52:after {
-  content: "";
-  background-color: rgb(236, 100, 100);
-  width: 100%;
-  z-index: -1;
-  position: absolute;
-  height: 100%;
-  top: 7px;
-  left: 7px;
-  transition: 0.2s;
-}
-
-.button-52:hover:after {
-  top: 0px;
-  left: 0px;
-}
-
-@media (min-width: 768px) {
-  .button-52 {
-    padding: 13px 50px 13px;
-  }
 }

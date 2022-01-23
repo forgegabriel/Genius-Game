@@ -12,26 +12,27 @@
 
 <body>
     <div class="main-game">
-        <div class="hud-info">
-            <div>
-                <button id="iniciar-jogo-btn" class="button-52">Iniciar Jogo</button>
+        <div class="hud-before">
+            <button id="iniciar-jogo-btn" onclick="iniciarJogo()">Começar</button>
+        </div>
+        <div class="board">
+            <div id="central-btn"></div>
+            <div class="genius">
+                <div class="green-btn">
+                    <div id="green-btn" class="white-backcolor"></div>
+                </div>
+                <div class="red-btn">
+                    <div id="red-btn" class="white-backcolor"></div>
+                </div>
+                <div class="yellow-btn">
+                    <div id="yellow-btn" class="white-backcolor"></div>
+                </div>
+                <div class="blue-btn">
+                    <div id="blue-btn" class="white-backcolor"></div>
+                </div>
             </div>
         </div>
-        <div class="genius">
-            <div class="green-btn">
-                <div id="green-btn" class="white-backcolor"></div>
-            </div>
-            <div class="red-btn">
-                <div id="red-btn" class="white-backcolor"></div>
-            </div>
-            <div class="yellow-btn">
-                <div id="yellow-btn" class="white-backcolor"></div>
-            </div>
-            <div class="blue-btn">
-                <div id="blue-btn" class="white-backcolor"></div>
-            </div>
-        </div>
-        <div class="hud-placar">Placar do jogo</div>
+        <div class="hud-after"></div>
     </div>
     <script src="script.js"></script>
 </body>

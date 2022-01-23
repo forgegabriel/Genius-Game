@@ -3,43 +3,48 @@
 function changeTransparency(div, shouldBeOn) {
     if (shouldBeOn) {
         div.classList.add("opacity-change")
-        console.log(event.type);
     } else {
+        console.log(div);
         div.classList.remove("opacity-change")
-        console.log(event.type);
     }
 }
 
 //verifica click de mouse ou toque na tela
 function inputClickDown() {
-    if (event.type === "touchstart") {
-        screenWasTouched[0] = true;
-        btnIsDown = true;
-        changeTransparency(this, btnIsDown);
-    } else {
-        if (!screenWasTouched[0]) {
+    if (canPressBtn) {
+        if (event.type === "touchstart") {
+            screenWasTouched[0] = true;
             btnIsDown = true;
             changeTransparency(this, btnIsDown);
+        } else {
+            if (!screenWasTouched[0]) {
+                btnIsDown = true;
+                changeTransparency(this, btnIsDown);
+            }
+            screenWasTouched[0] = false;
         }
-        screenWasTouched[0] = false;
     }
 }
 
 function inputClickUp() {
-    if (!screenWasTouched[1]) {
-    }
-    if (event.type === "touchend") {
-        screenWasTouched[1] = true;
-        if (btnIsDown) {
-            btnIsDown = false;
-            changeTransparency(this, btnIsDown);
+    if (canPressBtn) {
+        if (event.type === "touchend") {
+            screenWasTouched[1] = true;
+            if (btnIsDown) {
+                btnIsDown = false;
+                changeTransparency(this, btnIsDown);
+                seqPlayer.push(btnCores.indexOf(this.id));
+                verify();
+            }
+        } else {
+            if (btnIsDown) {
+                btnIsDown = false;
+                changeTransparency(this, btnIsDown);
+                seqPlayer.push(btnCores.indexOf(this.id));
+                verify();
+            }
+            screenWasTouched[1] = false;
         }
-    } else {
-        if (btnIsDown) {
-            btnIsDown = false;
-            changeTransparency(this, btnIsDown);
-        }
-        screenWasTouched[1] = false;
     }
 }
 
@@ -48,6 +53,7 @@ colorBtn[0] = document.getElementById("green-btn");
 colorBtn[1] = document.getElementById("red-btn");
 colorBtn[2] = document.getElementById("yellow-btn");
 colorBtn[3] = document.getElementById("blue-btn");
+let starBtn = document.getElementById("iniciar-jogo-btn");
 let btnIsDown = false;
 let screenWasTouched = [false, false];
 
@@ -61,13 +67,59 @@ for (let i = 0; i < 4; i++) {
 
 
 //Reproduzindo o jogo
+let canPressBtn = true;
+let jogoAtivo = false;
+let seqCores = [];
+let seqPlayer = [];
+const btnCores = [
+    "green-btn",
+    "red-btn",
+    "yellow-btn",
+    "blue-btn"
+];
 
-let sheffleOrder = () => {
-    let colorOrder = Math.floor(Math.random() * 4);
-    order[order.length] = colorOrder;
-    clickedOrder = [];
+function iniciarJogo() {
+    canPressBtn = false;
+    jogoAtivo = true;
+    starBtn.innerHTML = "Restart";
+    seqCores = [];
+    continuarJogo();
+}
 
-    for (let i in order) {
+function continuarJogo() {
+    seqPlayer = [];
+    seqCores.push(Math.floor(Math.random() * 4));
+    play();
+}
 
+function play() {
+    console.log(play);
+    let relogio = 0;
+    let blinkBtnSeq = setInterval(() => {
+        changeTransparency(colorBtn[seqCores[relogio]], true);
+        setTimeout(() => {
+            changeTransparency(colorBtn[seqCores[relogio]], false);
+            if (relogio === (seqCores.length - 1)) {
+                canPressBtn = true;
+                console.log(stop);
+                clearInterval(blinkBtnSeq);
+            }
+            relogio = relogio + 1;
+        }, 200);
+    }, 500);
+}
+
+function verify() {
+    if (jogoAtivo) {
+        for (let i in seqPlayer) {
+            if (seqCores[i] === seqPlayer[i]) {
+                if (i == (seqCores.length - 1)) {
+                    canPressBtn = false;
+                    continuarJogo();
+                }
+            } else {
+                jogoAtivo = false;
+            }
+        }
     }
 }
