@@ -7,10 +7,26 @@ h2 {
     margin: 10px 0;
 }
 
-.main-game {
-    height: 100vh;
-    width: 100vw;
+.curtain {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(199, 187, 172);
+    z-index: 3;
+}
+
+.curtain>h2 {
+    font-family: monospace;
+    font-size: 35px;
+}
+
+.main-game {
+    display: flex;
+    min-width: 100vw;
+    min-height: 100vh;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -24,6 +40,7 @@ h2 {
 }
 
 .hud-before {
+    margin-top: 20px;
     justify-content: flex-end;
     align-items: center;
 }
@@ -76,7 +93,7 @@ h2 {
 
 .genius {
     display: grid;
-    grid-template-areas: "green red" "yellow blue";
+    grid-template-areas: "green red""yellow blue";
     border: 25px solid #222;
     background-color: #222;
     border-radius: 49%;
@@ -92,22 +109,22 @@ h2 {
 }
 
 .genius>.green-btn {
-    background-image: linear-gradient(to top left, #00ad00, #5dff5d) ;
+    background-image: linear-gradient(to top left, #00ad00, #5dff5d);
     border-top-left-radius: 100%;
 }
 
 .genius>.red-btn {
-    background-image: linear-gradient(to top right, #fb2323, #ff5a5a) ;
+    background-image: linear-gradient(to top right, #fb2323, #ff5a5a);
     border-top-right-radius: 100%;
 }
 
 .genius>.yellow-btn {
-    background-image: linear-gradient(to bottom left, #ffff00, #ffff72) ;
+    background-image: linear-gradient(to bottom left, #ffff00, #ffff72);
     border-bottom-left-radius: 100%;
 }
 
 .genius>.blue-btn {
-    background-image: linear-gradient(to bottom right, #1f66ff, #4a83ff) ;
+    background-image: linear-gradient(to bottom right, #1f66ff, #4a83ff);
     border-bottom-right-radius: 100%;
 }
 
@@ -115,7 +132,7 @@ h2 {
     height: 100%;
     width: 100%;
     position: absolute;
-    box-shadow: 0px 0px 50px #000 inset;
+    box-shadow: 0px 0px min(10vw, 10vh) #000 inset;
     border-radius: inherit;
     opacity: 0%;
     cursor: pointer;
@@ -137,4 +154,12 @@ h2 {
 
 .hud-after>p {
     font-size: 100px;
+}
+
+@media only screen and (min-width: 600px) {
+
+    .main-game {
+        flex-direction: row;
+    }
+
 }

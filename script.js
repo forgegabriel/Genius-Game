@@ -2,10 +2,27 @@
 
 function changeTransparency(div, shouldBeOn) {
     if (shouldBeOn) {
-        div.classList.add("opacity-change")
+        switch (div.id) {
+            case "green-btn":
+                sndGreen.currentTime = 0;
+                sndGreen.play();
+                break;
+            case "red-btn":
+                sndRed.currentTime = 0;
+                sndRed.play();
+                break;
+            case "yellow-btn":
+                sndYellow.currentTime = 0;
+                sndYellow.play();
+                break;
+            case "blue-btn":
+                sndBlue.currentTime = 0;
+                sndBlue.play();
+                break;
+        }
+        div.classList.add("opacity-change");
     } else {
-        console.log(div);
-        div.classList.remove("opacity-change")
+        div.classList.remove("opacity-change");
     }
 }
 
@@ -53,10 +70,14 @@ colorBtn[0] = document.getElementById("green-btn");
 colorBtn[1] = document.getElementById("red-btn");
 colorBtn[2] = document.getElementById("yellow-btn");
 colorBtn[3] = document.getElementById("blue-btn");
-let starBtn = document.getElementById("iniciar-jogo-btn");
-let jogoInfo = document.getElementById("jogo-info");
-let middle = document.getElementById("central-circle");
-let pontosDiv = document.getElementById("pontos-jogo");
+const starBtn = document.getElementById("iniciar-jogo-btn");
+const jogoInfo = document.getElementById("jogo-info");
+const middle = document.getElementById("central-circle");
+const pontosDiv = document.getElementById("pontos-jogo");
+const sndGreen = new Audio("audio/greenkey.mp3");
+const sndRed = new Audio("audio/redkey.mp3");
+const sndYellow = new Audio("audio/yellowkey.mp3");
+const sndBlue = new Audio("audio/bluekey.mp3");
 let btnIsDown = false;
 let screenWasTouched = [false, false];
 
@@ -75,6 +96,7 @@ let jogoAtivo = false;
 let seqCores = [];
 let seqPlayer = [];
 let pontos = 0;
+let primeiraVez = true;
 const btnCores = [
     "green-btn",
     "red-btn",
@@ -83,7 +105,7 @@ const btnCores = [
 ];
 
 function iniciarJogo() {
-    if(canPressBtn) {
+    if (canPressBtn) {
         canPressBtn = false;
         jogoAtivo = true;
         pontos = 0;
@@ -98,11 +120,10 @@ function continuarJogo() {
     seqPlayer = [];
     jogoInfo.innerHTML = "&nbsp;";
     seqCores.push(Math.floor(Math.random() * 4));
-    play();
+    playGame();
 }
 
-function play() {
-    console.log("play");
+function playGame() {
     let relogio = 0;
     let blinkBtnSeq = setInterval(() => {
         changeTransparency(colorBtn[seqCores[relogio]], true);
@@ -111,7 +132,6 @@ function play() {
             if (relogio === (seqCores.length - 1)) {
                 canPressBtn = true;
                 jogoInfo.innerHTML = "Reproduza a sequência:";
-                console.log("stop");
                 clearInterval(blinkBtnSeq);
             }
             relogio = relogio + 1;
@@ -127,11 +147,11 @@ function verify() {
                     canPressBtn = false;
                     pontos++;
                     pontosDiv.innerHTML = pontos;
-                    continuarJogo();
+                    setTimeout(() => {
+                        continuarJogo()
+                    }, 300); 
                 }
             } else {
-                pontos = 0;
-                pontosDiv.innerHTML = pontos;
                 jogoInfo.innerHTML = "Você errou";
                 jogoAtivo = false;
             }
