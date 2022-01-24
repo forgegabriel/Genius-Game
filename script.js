@@ -54,6 +54,9 @@ colorBtn[1] = document.getElementById("red-btn");
 colorBtn[2] = document.getElementById("yellow-btn");
 colorBtn[3] = document.getElementById("blue-btn");
 let starBtn = document.getElementById("iniciar-jogo-btn");
+let jogoInfo = document.getElementById("jogo-info");
+let middle = document.getElementById("central-circle");
+let pontosDiv = document.getElementById("pontos-jogo");
 let btnIsDown = false;
 let screenWasTouched = [false, false];
 
@@ -71,6 +74,7 @@ let canPressBtn = true;
 let jogoAtivo = false;
 let seqCores = [];
 let seqPlayer = [];
+let pontos = 0;
 const btnCores = [
     "green-btn",
     "red-btn",
@@ -79,21 +83,26 @@ const btnCores = [
 ];
 
 function iniciarJogo() {
-    canPressBtn = false;
-    jogoAtivo = true;
-    starBtn.innerHTML = "Restart";
-    seqCores = [];
-    continuarJogo();
+    if(canPressBtn) {
+        canPressBtn = false;
+        jogoAtivo = true;
+        pontos = 0;
+        pontosDiv.innerHTML = pontos;
+        starBtn.innerHTML = "Restart";
+        seqCores = [];
+        continuarJogo();
+    }
 }
 
 function continuarJogo() {
     seqPlayer = [];
+    jogoInfo.innerHTML = "&nbsp;";
     seqCores.push(Math.floor(Math.random() * 4));
     play();
 }
 
 function play() {
-    console.log(play);
+    console.log("play");
     let relogio = 0;
     let blinkBtnSeq = setInterval(() => {
         changeTransparency(colorBtn[seqCores[relogio]], true);
@@ -101,7 +110,8 @@ function play() {
             changeTransparency(colorBtn[seqCores[relogio]], false);
             if (relogio === (seqCores.length - 1)) {
                 canPressBtn = true;
-                console.log(stop);
+                jogoInfo.innerHTML = "Reproduza a sequência:";
+                console.log("stop");
                 clearInterval(blinkBtnSeq);
             }
             relogio = relogio + 1;
@@ -115,9 +125,14 @@ function verify() {
             if (seqCores[i] === seqPlayer[i]) {
                 if (i == (seqCores.length - 1)) {
                     canPressBtn = false;
+                    pontos++;
+                    pontosDiv.innerHTML = pontos;
                     continuarJogo();
                 }
             } else {
+                pontos = 0;
+                pontosDiv.innerHTML = pontos;
+                jogoInfo.innerHTML = "Você errou";
                 jogoAtivo = false;
             }
         }
