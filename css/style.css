@@ -161,5 +161,25 @@ h2 {
     .main-game {
         flex-direction: row;
     }
+}
 
+@media (prefers-color-scheme: dark) {
+
+    body {
+        background-color: rgb(87, 73, 63);
+        color: #fff;
+    }
+
+    .curtain {
+        background-color: rgb(66, 56, 49);
+    }
+
+    #iniciar-jogo-btn {
+        color: #000;
+        background-color: #fff;
+    }
+
+    .inner-central-circle {
+        background-color: #555;
+    }
 }

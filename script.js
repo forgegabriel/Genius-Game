@@ -33,7 +33,7 @@ function inputClickDown() {
             screenWasTouched[0] = true;
             btnIsDown = true;
             changeTransparency(this, btnIsDown);
-        } else {
+        } else if(event.button === 0) {
             if (!screenWasTouched[0]) {
                 btnIsDown = true;
                 changeTransparency(this, btnIsDown);
